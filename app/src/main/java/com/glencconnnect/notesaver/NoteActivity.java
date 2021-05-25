@@ -2,6 +2,8 @@ package com.glencconnnect.notesaver;
 
 import android.os.Bundle;
 
+import com.glencconnnect.notesaver.models.CourseInfo;
+import com.glencconnnect.notesaver.models.DataManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -12,7 +14,10 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
+import java.util.List;
 
 public class NoteActivity extends AppCompatActivity {
 
@@ -24,7 +29,12 @@ public class NoteActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Spinner spinnerCourses = findViewById(R.id.spinner_courses);
-
+        List<CourseInfo> courses = DataManager.getInstance().getCourses();
+        ArrayAdapter<CourseInfo> adapterCourses =
+                new ArrayAdapter<CourseInfo>(this, android.R.layout.simple_spinner_item,
+                        courses);
+        adapterCourses.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCourses.setAdapter(adapterCourses);
 
     }
 
