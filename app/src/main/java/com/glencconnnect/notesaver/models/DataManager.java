@@ -3,9 +3,6 @@ package com.glencconnnect.notesaver.models;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Jim.
- */
 
 public class DataManager {
     private static DataManager ourInstance = null;

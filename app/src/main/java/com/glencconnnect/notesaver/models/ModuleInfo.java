@@ -3,9 +3,7 @@ package com.glencconnnect.notesaver.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by Jim.
- */
+
 
 public final class ModuleInfo implements Parcelable {
     private final String mModuleId;
