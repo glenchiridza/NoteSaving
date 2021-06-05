@@ -1,9 +1,11 @@
 package com.glencconnnect.notesaver;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.glencconnnect.notesaver.models.CourseInfo;
 import com.glencconnnect.notesaver.models.DataManager;
+import com.glencconnnect.notesaver.models.NoteInfo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -15,11 +17,14 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.util.List;
 
 public class NoteActivity extends AppCompatActivity {
+
+    private NoteInfo note;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,17 @@ public class NoteActivity extends AppCompatActivity {
                         courses);
         adapterCourses.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCourses.setAdapter(adapterCourses);
+
+        readDisplayStateValues();
+
+        EditText textNoteTitle = findViewById(R.id.note_title);
+        EditText textNoteText = findViewById(R.id.note_text);
+
+    }
+
+    private void readDisplayStateValues() {
+        Intent intent = getIntent();
+        note = intent.getParcelableExtra(NoteListActivity.NOTE_INFO);
 
     }
 
