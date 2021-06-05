@@ -46,6 +46,16 @@ public class NoteActivity extends AppCompatActivity {
         EditText textNoteTitle = findViewById(R.id.note_title);
         EditText textNoteText = findViewById(R.id.note_text);
 
+        displayNote(spinnerCourses,textNoteTitle,textNoteText);
+    }
+
+    private void displayNote(Spinner spinnerCourses, EditText textNoteTitle, EditText textNoteText) {
+        List<CourseInfo> courses = DataManager.getInstance().getCourses();
+        int courseIndex = courses.indexOf(note.getCourse());
+
+        spinnerCourses.setSelection(courseIndex);
+        textNoteTitle.setText(note.getText());
+        textNoteText.setText(note.getText());
     }
 
     private void readDisplayStateValues() {
