@@ -23,6 +23,9 @@ public class NoteActivity extends AppCompatActivity {
     public static final int POSITION_NOT_SET = -1;
     private NoteInfo note;
     private boolean isNewNote;
+    private EditText textNoteText;
+    private EditText textNoteTitle;
+    private Spinner spinnerCourses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +34,7 @@ public class NoteActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Spinner spinnerCourses = findViewById(R.id.spinner_courses);
+        spinnerCourses = findViewById(R.id.spinner_courses);
         List<CourseInfo> courses = DataManager.getInstance().getCourses();
         ArrayAdapter<CourseInfo> adapterCourses =
                 new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
@@ -41,11 +44,11 @@ public class NoteActivity extends AppCompatActivity {
 
         readDisplayStateValues();
 
-        EditText textNoteTitle = findViewById(R.id.note_title);
-        EditText textNoteText = findViewById(R.id.note_text);
+        textNoteTitle = findViewById(R.id.note_title);
+        textNoteText = findViewById(R.id.note_text);
 
         if(!isNewNote)
-            displayNote(spinnerCourses,textNoteTitle,textNoteText);
+            displayNote(spinnerCourses, textNoteTitle, textNoteText);
     }
 
     private void displayNote(Spinner spinnerCourses, EditText textNoteTitle, EditText textNoteText) {
@@ -82,10 +85,24 @@ public class NoteActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_send_email) {
+            sendEmail();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void sendEmail() {
+
+        CourseInfo course = (CourseInfo) spinnerCourses.getSelectedItem();
+        String subject = textNoteTitle.getText().toString();
+        String text = "check out what I learnt" + course.getTitle() + "\n" + textNoteText.getText();
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("message/rfc2822");
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_TEXT,text);
+        startActivity(intent);
+
     }
 }
