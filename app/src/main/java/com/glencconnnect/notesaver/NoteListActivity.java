@@ -6,7 +6,6 @@ import android.os.Bundle;
 import com.glencconnnect.notesaver.models.DataManager;
 import com.glencconnnect.notesaver.models.NoteInfo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -20,7 +19,7 @@ import java.util.List;
 
 public class NoteListActivity extends AppCompatActivity {
 
-    public static final String NOTE_INFO ="com.glencconnect.NOTE_INFO";
+    public static final String NOTE_POSITION ="com.glencconnect.NOTE_POSITION";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +32,7 @@ public class NoteListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent(NoteListActivity.this,NoteActivity.class));
             }
         });
 
@@ -54,8 +52,8 @@ public class NoteListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
                 Intent intent = new Intent(NoteListActivity.this,NoteActivity.class);
-                NoteInfo note = (NoteInfo)listNotes.getItemAtPosition(position);
-                intent.putExtra(NOTE_INFO,note);
+//                NoteInfo note = (NoteInfo)listNotes.getItemAtPosition(position);
+                intent.putExtra(NOTE_POSITION,position);
                 startActivity(intent);
             }
         });

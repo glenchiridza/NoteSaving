@@ -6,13 +6,9 @@ import android.os.Bundle;
 import com.glencconnnect.notesaver.models.CourseInfo;
 import com.glencconnnect.notesaver.models.DataManager;
 import com.glencconnnect.notesaver.models.NoteInfo;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,7 +20,9 @@ import java.util.List;
 
 public class NoteActivity extends AppCompatActivity {
 
+    public static final int POSITION_NOT_SET = -1;
     private NoteInfo note;
+    private boolean isNewNote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +44,8 @@ public class NoteActivity extends AppCompatActivity {
         EditText textNoteTitle = findViewById(R.id.note_title);
         EditText textNoteText = findViewById(R.id.note_text);
 
-        displayNote(spinnerCourses,textNoteTitle,textNoteText);
+        if(!isNewNote)
+            displayNote(spinnerCourses,textNoteTitle,textNoteText);
     }
 
     private void displayNote(Spinner spinnerCourses, EditText textNoteTitle, EditText textNoteText) {
@@ -60,7 +59,11 @@ public class NoteActivity extends AppCompatActivity {
 
     private void readDisplayStateValues() {
         Intent intent = getIntent();
-        note = intent.getParcelableExtra(NoteListActivity.NOTE_INFO);
+//        note = intent.getParcelableExtra(NoteListActivity.NOTE_POSITION);
+        int position = intent.getIntExtra(NoteListActivity.NOTE_POSITION, POSITION_NOT_SET);
+        isNewNote = position == POSITION_NOT_SET;
+        if(isNewNote)
+            note = DataManager.getInstance().getNotes().get(position);
 
     }
 
