@@ -26,6 +26,7 @@ public class NoteActivity extends AppCompatActivity {
     private EditText textNoteText;
     private EditText textNoteTitle;
     private Spinner spinnerCourses;
+    private int notePosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +66,17 @@ public class NoteActivity extends AppCompatActivity {
 //        note = intent.getParcelableExtra(NoteListActivity.NOTE_POSITION);
         int position = intent.getIntExtra(NoteListActivity.NOTE_POSITION, POSITION_NOT_SET);
         isNewNote = position == POSITION_NOT_SET;
-        if(isNewNote)
+        if(isNewNote){
+            createNewNote();
+        }else {
             note = DataManager.getInstance().getNotes().get(position);
+        }
+    }
+
+    private void createNewNote() {
+        DataManager dm = DataManager.getInstance();
+        notePosition = dm.createNewNote();
+        note = dm.getNotes().get(notePosition);
 
     }
 
