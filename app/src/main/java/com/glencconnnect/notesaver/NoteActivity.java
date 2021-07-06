@@ -105,4 +105,16 @@ public class NoteActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        saveNote();
+    }
+
+    private void saveNote() {
+        note.setCourse((CourseInfo) spinnerCourses.getSelectedItem());
+        note.setTitle(textNoteTitle.getText().toString());
+        note.setText(textNoteText.getText().toString());
+    }
 }
